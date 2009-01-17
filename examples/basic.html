@@ -1,15 +1,60 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Basic -- Dialog</title>
-    
+    <script src="../js/prototype.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/effects.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/dialog.js" type="text/javascript" charset="utf-8"></script>
     <style type="text/css" media="screen">
-      
+      body{
+        background:#eee;
+        font:14px/18px verdana,sans-serif;
+        color:#222;
+        }
+      #basic_dialog,
+      #basic_dialog_2{
+      	width:55%;
+      	border:4px solid #ccc;
+      	background:#fff;
+      	padding:20px;
+      	margin:0 auto;
+      	}
     </style>
+    <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+      document.observe('dom:loaded', function(e)
+      {
+        var dialog = $('basic_dialog');        
+        var dialog_2 = $('basic_dialog_2');
+        
+        // setup the dialogs
+        new Dialog.Box('basic_dialog');
+        new Dialog.Box(basic_dialog_2, {overlay_color:'#0f0'});
+        
+        // setup the controls for the dialogs -- nothing fancy
+        $('show_dialog').observe('click', function(e){ dialog.toggle(); Event.stop(e); });
+        $('show_dialog_2').observe('click', function(e){ dialog_2.toggle(); Event.stop(e); });
+      });
+    //]]>  
+    </script>
   </head>
   <body>
+    <p><a href='#' id='show_dialog'>Open Dialog Box #1</a></p>
+    <p><a href='#' id='show_dialog_2'>Open Dialog Box #2</a></p>
+
+
+    <div id="basic_dialog_2" style='display:none;'>
+      <h3>My Other Dialog</h3>
+      <p>this is my dialog box. yipee hooray!</p>
+    </div>
     
+    <div id="basic_dialog" style='display:none;'>
+      <h3>Test</h3>
+      <p>this is my dialog box. yipee hooray!</p>
+    </div>
+
   </body>
 </html>
