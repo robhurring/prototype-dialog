@@ -14,46 +14,130 @@
         font:14px/18px verdana,sans-serif;
         color:#222;
         }
+			h3{
+				border-bottom:1px solid #ddd;
+				padding-bottom:2px;
+				font:20px/20px georgia,serif;
+				}
       #basic_dialog,
-      #basic_dialog_2{
+      #overlayless,
+			#persistent_dialog,
+			#custom_dialog{
       	width:55%;
       	border:4px solid #ccc;
       	background:#fff;
-      	padding:20px;
+      	padding:0 20px 20px;
       	margin:0 auto;
       	}
+				#persistent_dialog{
+					width:30%;
+					}
+			#custom_dialog_overlay{
+				/* Thanks to http://squidfingers.com for the cool backgrounds :) */
+				background:url('pattern_140.gif');
+				position:absolute;
+				top:0;
+				left:0;
+				}
+			label{
+				display:block;
+				font:16px/28px verdana;
+				color:#666;
+				}
+			input[type='text'],
+			input[type='password']{
+				width:95%;
+				border:2px solid #ddd;
+				padding:4px 2px;
+				font:16px/20px verdana;
+				}
+			pre{
+				border:1px dotted #999;
+				background:#f8f8f8;
+				margin:10px;
+				padding:5px;
+				font:13px/16px monospace;
+				text-align:left;
+				}
     </style>
     <script type="text/javascript" charset="utf-8">
     //<![CDATA[
       document.observe('dom:loaded', function(e)
       {
         var dialog = $('basic_dialog');        
-        var dialog_2 = $('basic_dialog_2');
+        var dialog_2 = $('overlayless');
+				var	dialog_3 = $('persistent_dialog');
+				var	dialog_4 = $('custom_dialog');
         
-        // setup the dialogs
+				// it can take either a string, or an element ID
         new Dialog.Box('basic_dialog');
-        new Dialog.Box(basic_dialog_2, {overlay_color:'#0f0'});
+				// I don't want an overlay at all...
+        new Dialog.Box(dialog_2, {use_overlay:false});
+				// can only be hidden by the 'cancel' link
+        new Dialog.Box(dialog_3, {overlay_color:'#589', opacity_to:0.5, persistent:false});
+				// can use a custom overlay -- height is automatically set
+				var KEY_X = 120;
+        new Dialog.Box(dialog_4, {duration:0.5, opacity_to:0.65, hide_on_key:KEY_X});
         
         // setup the controls for the dialogs -- nothing fancy
         $('show_dialog').observe('click', function(e){ dialog.toggle(); Event.stop(e); });
         $('show_dialog_2').observe('click', function(e){ dialog_2.toggle(); Event.stop(e); });
+        $('show_dialog_3').observe('click', function(e){ dialog_3.persistent_show(); Event.stop(e); });
+        $('show_dialog_4').observe('click', function(e){ dialog_4.toggle(); Event.stop(e); });
+				$('cancel_login_form').observe('click', function(e){ dialog_3.hide(); Event.stop(e); });
       });
     //]]>  
     </script>
   </head>
   <body>
-    <p><a href='#' id='show_dialog'>Open Dialog Box #1</a></p>
-    <p><a href='#' id='show_dialog_2'>Open Dialog Box #2</a></p>
+		<!-- simple controls -->
+    <p><a href='#' id='show_dialog'>Basic Dialog Box (Default Settings)</a></p>
+    <p><a href='#' id='show_dialog_2'>No Overlay</a></p>
+    <p><a href='#' id='show_dialog_3'>Persistent Dialog</a></p>
+    <p><a href='#' id='show_dialog_4'>Custom Overlay</a></p>
 
+		<!-- dialog html -->
+    <div id="custom_dialog" style='display:none;'>
+      <h3>A custom dialog box</h3>
+			<small>You can close me by pressing &lt;x> (we overrode this in the settings) or clicking the overlay (or <a href='#' onclick="$('custom_dialog').hide()">here</a>)</small>
+      <p>I have a custom overlay! (create a div which has the same ID and <strong>_overlay</strong> appended for a custom overlay)</p>
+			<pre>&lt;div id="<em>my_dialog</em>">
+	If this is your dialog container
+&lt;/div>
+&lt;div id="<em>my_dialog</em><strong>_overlay</strong>">
+	This is your overlay
+&lt;/div></pre>
+		<p>The overlay's <strong>height + width are automatically set by the script</strong>, but you still must specify positioning and top/left -- just to keep it a little more flexible</p>
+    </div>
+		<div id="custom_dialog_overlay" style='display:none;'>&nbsp;</div>
+		
+    <div id="persistent_dialog" style='display:none;'>
+      <h3>User Login</h3>
+			<small>You must log in before continuing..</small>
+			<p>
+				<label>Username</label>
+				<input type='text'>
+			</p>
+			<p>
+				<label>Password</label>
+				<input type='password'>
+			</p>
+			<p>
+				<input type='submit' value='Login' onclick='alert("do your login business\nclick cancel to hide the dialog");'> or <a href='#' id='cancel_login_form'>cancel</a>
+			</p>		
+    </div>
 
-    <div id="basic_dialog_2" style='display:none;'>
-      <h3>My Other Dialog</h3>
-      <p>this is my dialog box. yipee hooray!</p>
+    <div id="overlayless" style='display:none;'>
+      <h3>Overlay-less</h3>
+			<small>I'm not using an overlay. To hide me you can press &lt;ESC> (or click <a href='#' onclick="$('overlayless').hide()">here</a>)</small>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dapibus tortor quis lorem. Proin et mi. Maecenas ac dolor aliquam ipsum euismod ullamcorper. Aliquam faucibus, velit in bibendum aliquet, elit libero ultricies eros, at luctus velit tortor euismod urna. Morbi porttitor metus id risus. Suspendisse potenti. Etiam vulputate luctus nibh. Fusce dignissim fringilla ipsum. Praesent ut augue. Pellentesque arcu magna, venenatis eget, pharetra eu, accumsan commodo, tortor. Fusce faucibus fermentum purus. Morbi id lectus. Ut mauris tortor, blandit eget, consequat in, tempor et, velit. Etiam fringilla nunc sit amet eros. Aliquam ac metus ac libero molestie fringilla. Curabitur blandit tempor odio. Curabitur nunc urna, egestas sit amet, dapibus in, tempor non, odio. Curabitur at elit.</p>
     </div>
     
     <div id="basic_dialog" style='display:none;'>
-      <h3>Test</h3>
-      <p>this is my dialog box. yipee hooray!</p>
+      <h3>Basic Dialog</h3>
+			<small>Press &lt;ESC> or click outside the dialog to close it (or click <a href='#' onclick="$('basic_dialog').hide()">here</a>)</small>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dapibus tortor quis lorem. Proin et mi. Maecenas ac dolor aliquam ipsum euismod ullamcorper. Aliquam faucibus, velit in bibendum aliquet, elit libero ultricies eros, at luctus velit tortor euismod urna. Morbi porttitor metus id risus. Suspendisse potenti. Etiam vulputate luctus nibh. Fusce dignissim fringilla ipsum. Praesent ut augue. Pellentesque arcu magna, venenatis eget, pharetra eu, accumsan commodo, tortor. Fusce faucibus fermentum purus. Morbi id lectus. Ut mauris tortor, blandit eget, consequat in, tempor et, velit. Etiam fringilla nunc sit amet eros. Aliquam ac metus ac libero molestie fringilla. Curabitur blandit tempor odio. Curabitur nunc urna, egestas sit amet, dapibus in, tempor non, odio. Curabitur at elit.</p>
+			<p>Etiam sagittis orci cursus nisl. Cras fringilla, lacus quis semper mattis, nunc nunc gravida lectus, eget malesuada metus leo non ante. Cras sit amet lorem. Pellentesque eu nisi non enim euismod ultricies. Morbi facilisis felis placerat magna. Maecenas eu risus ut dui auctor hendrerit. Duis diam metus, aliquet at, luctus nec, vehicula sit amet, libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum molestie mauris. Donec semper pede in nunc. Pellentesque eu purus. Nunc commodo, neque ut fringilla auctor, neque turpis mollis metus, non tincidunt nisi lorem vitae ligula. Mauris at sem. Etiam elementum feugiat magna. Ut fringilla ultricies nibh.</p>
     </div>
 
   </body>
