@@ -46,8 +46,6 @@ Object.extend(Dialog.Box.prototype, {
 			fade_dialog:true
 		}, options || {});		
 
-    this.showing = false;
-
     this.dialog_box = (typeof id == 'string' ? $(id) : id);
     this.dialog_box.show = this.show.bind(this);
 		this.dialog_box.toggle = this.toggle.bind(this);
@@ -71,7 +69,7 @@ Object.extend(Dialog.Box.prototype, {
 		if(this.options.hide_on_key != false)
 		  document.observe('keypress', function(e)
 		  { 
-		    if(e.keyCode == this.options.hide_on_key && this.showing && !this.options.persistent) 
+		    if(e.keyCode == this.options.hide_on_key && this.dialog_box.visible() && !this.options.persistent) 
 		      this.hide(); 
 		  }.bind(this));
   },
@@ -104,7 +102,6 @@ Object.extend(Dialog.Box.prototype, {
 	// useful if you _must_ get data from the dialog and want to block the page until then
   show:function()
 	{ 
-	  this.showing = true;
 		this.overlay.setStyle({height:this.window_height()+'px', width:'100%'});
 
 		if(arguments[0]) this.options.persistent = true
@@ -140,8 +137,6 @@ Object.extend(Dialog.Box.prototype, {
 
   hide:function()
 	{
-	  this.showing = false;
-	  
 		if(this.options.hide_select_boxes)
 			this.select_boxes('show');
 
