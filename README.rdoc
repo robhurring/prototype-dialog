@@ -11,25 +11,25 @@ dialog's HTML must appear within the HTML document.
 
 ==Usage
 
-(See examples/basic.html for working examples)
+  (See examples/basic.html for working examples)
 
-new Dialog.Box('dialog_element_id', [options = {}]);
+  new Dialog.Box('dialog_element_id', [options = {}]);
 
-// to show
-$('dialog_element_id').show();
+  // to show
+  $('dialog_element_id').show();
 
-// to hide
-$('dialog_element_id').hide();
+  // to hide
+  $('dialog_element_id').hide();
 
 ==Available Options
 
-use_overlay::     if you want the overlay to show or not -- setting to false means manually hiding() the dialog
-hide_on_key::     if set we will listen for this key code and hide on it, set to +FALSE+ if you don't want this       
-overlay_color::   sets the color of the overlay(unless using a custom one)
-duration::        how long the overlay (or dialog if you use fade_dialog) takes to appear/fade
-opacity_from::    appear/fade from this opacity -- you will probably never use this
-opacity_to::      what opacity should the overlay get (doesn't work for dialog itself)
-reset_form::      should we clear the dialog's input fields when hidden? useful for login forms
-hide_select_boxes::  should we hide select boxes when transitioning? default is true for IE only
-persistent::      keeps the dialog up until you explicitly tell it to hide()
-fade_dialog::     should we fade in/out the dialog along with the overlay?
+  use_overlay::     if you want the overlay to show or not -- setting to false means manually hiding() the dialog
+  hide_on_key::     if set we will listen for this key code and hide on it, set to +FALSE+ if you don't want this       
+  overlay_color::   sets the color of the overlay(unless using a custom one)
+  duration::        how long the overlay (or dialog if you use fade_dialog) takes to appear/fade
+  opacity_from::    appear/fade from this opacity -- you will probably never use this
+  opacity_to::      what opacity should the overlay get (doesn't work for dialog itself)
+  reset_form::      should we clear the dialog's input fields when hidden? useful for login forms
+  hide_select_boxes::  should we hide select boxes when transitioning? default is true for IE only
+  persistent::      keeps the dialog up until you explicitly tell it to hide()
+  fade_dialog::     should we fade in/out the dialog along with the overlay?
